@@ -3,6 +3,8 @@ package aiss.PIntegracion.model.Comment;
 
 import java.util.List;
 
+import aiss.PIntegracion.model.Issue;
+import aiss.PIntegracion.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,10 +13,19 @@ public class Comment {
 
     @JsonProperty("id")
     private String id;
-    @JsonProperty("individual_note")
-    private Boolean individualNote;
     @JsonProperty("notes")
     private List<Note> notes;
+    @JsonProperty("author")
+    private User author;
+    @JsonProperty("issue")
+    private Issue issue;
+
+    public Comment(String id, List<Note> notes, User author, Issue issue) {
+        this.id = id;
+        this.notes = notes;
+        this.author = null;
+        this.issue = null;
+    }
 
     @JsonProperty("id")
     public String getId() {
@@ -24,16 +35,6 @@ public class Comment {
     @JsonProperty("id")
     public void setId(String id) {
         this.id = id;
-    }
-
-    @JsonProperty("individual_note")
-    public Boolean getIndividualNote() {
-        return individualNote;
-    }
-
-    @JsonProperty("individual_note")
-    public void setIndividualNote(Boolean individualNote) {
-        this.individualNote = individualNote;
     }
 
     @JsonProperty("notes")
@@ -46,28 +47,34 @@ public class Comment {
         this.notes = notes;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Comment.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("id");
-        sb.append('=');
-        sb.append(((this.id == null)?"<null>":this.id));
-        sb.append(',');
-        sb.append("individualNote");
-        sb.append('=');
-        sb.append(((this.individualNote == null)?"<null>":this.individualNote));
-        sb.append(',');
-        sb.append("notes");
-        sb.append('=');
-        sb.append(((this.notes == null)?"<null>":this.notes));
-        sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
-        } else {
-            sb.append(']');
-        }
-        return sb.toString();
+    @JsonProperty("author")
+    public User getAuthor() {
+        return author;
     }
 
+    @JsonProperty("author")
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+    @JsonProperty("issue")
+    public Issue getIssue() {
+        return issue;
+    }
+
+    @JsonProperty("issue")
+    public void setIssue(Issue issue) {
+        this.issue = issue;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Issue{" +
+                "id = " + id +
+                ", notes = " + notes +
+                ", author = " + author +
+                ", issue = " + issue +
+                "} \n";
+    }
 }

@@ -1,8 +1,12 @@
 
 package aiss.PIntegracion.model;
 
+import aiss.PIntegracion.model.Comment.Comment;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
@@ -17,6 +21,24 @@ public class User {
     private String avatarUrl;
     @JsonProperty("web_url")
     private String webUrl;
+    @JsonProperty("issue_author")
+    private List<Issue> author;
+    @JsonProperty("comment")
+    private List<Comment> comment;
+    @JsonProperty("issue_assignee")
+    private List<Issue> assignee;
+
+
+    public User(Integer id, String username, String name, String avatarUrl, String webUrl) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.avatarUrl = avatarUrl;
+        this.webUrl = webUrl;
+        this.author = new ArrayList<Issue>();
+        this.comment = new ArrayList<Comment>();
+        this.assignee = new ArrayList<Issue>();
+    }
 
     @JsonProperty("id")
     public Integer getId() {
@@ -68,6 +90,36 @@ public class User {
         this.webUrl = webUrl;
     }
 
+    @JsonProperty("author")
+    public List<Issue> getAuthor() {
+        return author;
+    }
+
+    @JsonProperty("author")
+    public void setAuthor(List<Issue> author) {
+        this.author = author;
+    }
+
+    @JsonProperty("comment")
+    public List<Comment> getComment() {
+        return comment;
+    }
+
+    @JsonProperty("comment")
+    public void setComment(List<Comment> comment) {
+        this.comment = comment;
+    }
+
+    @JsonProperty("assignee")
+    public List<Issue> getAssignee() {
+        return assignee;
+    }
+
+    @JsonProperty("assignee")
+    public void setAssignee(List<Issue> assignee) {
+        this.assignee = assignee;
+    }
+
     @Override
     public String toString() {
 
@@ -77,6 +129,9 @@ public class User {
                 ", name = " + name +
                 ", avatarUrl = " + avatarUrl +
                 ", webUrl = " + webUrl +
-                "}";
+                ", author = " + author +
+                ", comment = " + comment +
+                ", assignee = " + assignee +
+                "} \n";
     }
 }

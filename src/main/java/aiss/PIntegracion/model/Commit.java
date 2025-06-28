@@ -21,7 +21,20 @@ public class Commit {
     private String authoredDate;
     @JsonProperty("web_url")
     private String webUrl;
+    @JsonProperty("project")
+    private Project project;
 
+    public Commit(String id, String title, String message, String authorName, String authorEmail, String authoredDate,
+                  String webUrl, Project project) {
+        this.id = id;
+        this.title = title;
+        this.message = message;
+        this.authorName = authorName;
+        this.authorEmail = authorEmail;
+        this.authoredDate = authoredDate;
+        this.webUrl = webUrl;
+        this.project = null;
+    }
 
     @JsonProperty("id")
     public String getId() {
@@ -93,45 +106,28 @@ public class Commit {
         this.webUrl = webUrl;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(Commit.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("id");
-        sb.append('=');
-        sb.append(((this.id == null)?"<null>":this.id));
-        sb.append(',');
-        sb.append("title");
-        sb.append('=');
-        sb.append(((this.title == null)?"<null>":this.title));
-        sb.append(',');
-        sb.append("authorName");
-        sb.append('=');
-        sb.append(((this.authorName == null)?"<null>":this.authorName));
-        sb.append(',');
-        sb.append("authorEmail");
-        sb.append('=');
-        sb.append(((this.authorEmail == null)?"<null>":this.authorEmail));
-        sb.append(',');
-        sb.append("authoredDate");
-        sb.append('=');
-        sb.append(((this.authoredDate == null)?"<null>":this.authoredDate));
-        sb.append(',');
-        sb.append("message");
-        sb.append('=');
-        sb.append(((this.message == null)?"<null>":this.message));
-        sb.append(',');
-        sb.append("webUrl");
-        sb.append('=');
-        sb.append(((this.webUrl == null)?"<null>":this.webUrl));
-        sb.append(',');
-
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
-        } else {
-            sb.append(']');
-        }
-        return sb.toString();
+    @JsonProperty("project")
+    public Project getProject() {
+        return project;
     }
 
+    @JsonProperty("project")
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Issue{" +
+                "id = " + id +
+                ", title = " + title +
+                ", author_Name = " + authorName +
+                ", author_eMail = " + authorEmail +
+                ", authored_Date = " + authoredDate +
+                ", message = " + message +
+                ", webUrl = " + webUrl +
+                ", project = " + project +
+                "} \n";
+    }
 }
