@@ -119,7 +119,7 @@ public class Commit {
     @Override
     public String toString() {
 
-        return "Issue{" +
+        return "Commit{" +
                 "id = " + id +
                 ", title = " + title +
                 ", author_Name = " + authorName +

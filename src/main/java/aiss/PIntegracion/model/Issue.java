@@ -14,6 +14,8 @@ public class Issue {
 
     @JsonProperty("id")
     private Integer id;
+    @JsonProperty("iid")
+    private Integer iid;
     @JsonProperty("title")
     private String title;
     @JsonProperty("description")
@@ -43,9 +45,10 @@ public class Issue {
 
 
 
-    public Issue(Integer id, String title, String description, String state, String createdAt, String updatedAt, String closedAt,
+    public Issue(Integer id, Integer iid,String title, String description, String state, String createdAt, String updatedAt, String closedAt,
                  List<String> labels, Integer upvotes, Integer downvotes, List<Comment> comment, User author, User assignee, Integer projectId) {
         this.id = id;
+        this.iid = iid;
         this.title = title;
         this.description = description;
         this.state = state;
@@ -60,6 +63,12 @@ public class Issue {
         this.assignee = null;
         this.projectId = null;
     }
+
+    @JsonProperty("iid")
+    public Integer getIid(){ return iid; }
+
+    @JsonProperty("iid")
+    public void setIid(Integer iid){ this.iid = iid; }
 
     @JsonProperty("state")
     public String getState() {
@@ -207,6 +216,7 @@ public class Issue {
 
         return "Issue{" +
                 "id = " + id +
+                "iid = " + iid +
                 ", title = " + title +
                 ", description = " + description +
                 ", state = " + state +

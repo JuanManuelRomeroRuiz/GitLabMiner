@@ -1,7 +1,6 @@
 package aiss.PIntegracion.service;
 
-import aiss.PIntegracion.model.Project;
-import aiss.PIntegracion.model.User;
+import aiss.PIntegracion.model.Comment.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
-public class UserService {
+public class CommentService {
 
     @Value("${gitlab.token}")
     private String token;
@@ -23,50 +22,51 @@ public class UserService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<User> getUsers() {
-        String url = apiUrl + "/users";
+    public List<Comment> getAllCommentsFromIssueFromProject(Integer issueIid, Integer projectId) {
+        String url = apiUrl + "/projects/" + projectId + "/issues/" + issueIid + "/discussions";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("PRIVATE-TOKEN", token);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+
+        ResponseEntity<List<Comment>> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                new ParameterizedTypeReference<List<Comment>>() {}
+        );
+        return response.getBody();
+    }
+
+    public Comment getCommentByIdFromIssueFromProject(String commentId,Integer issueIid, Integer projectId) {
+        String url = apiUrl + "/projects/" + projectId + "/issues/" + issueIid + "/discussions/" + commentId;
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("PRIVATE-TOKEN", token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<List<User>> response = restTemplate.exchange(
+        ResponseEntity<Comment> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 entity,
-                new ParameterizedTypeReference<List<User>>() {}
+                Comment.class
         );
         return response.getBody();
     }
 
-    public User getUserById(Integer id) {
-        String url = apiUrl + "/users/" + id;
+    public Comment createComment(Comment comment,Integer issueIid, Integer projectId) {
+        String url = apiUrl + "/projects/" + projectId + "/issues/" + issueIid + "/comments";
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("PRIVATE-TOKEN", token);
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<User> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                entity,
-                User.class
-        );
-        return response.getBody();
-    }
-
-    public User createUser(User user) {
-        String url = apiUrl + "/users";
         HttpHeaders headers = new HttpHeaders();
         headers.set("PRIVATE-TOKEN", token);
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<User> request = new HttpEntity<>(user, headers);
+        HttpEntity<Comment> request = new HttpEntity<>(comment, headers);
 
-        ResponseEntity<User> response = restTemplate.exchange(
+        ResponseEntity<Comment> response = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 request,
-                User.class
+                Comment.class
         );
         return response.getBody();
     }

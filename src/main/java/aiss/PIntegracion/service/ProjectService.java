@@ -1,7 +1,6 @@
 package aiss.PIntegracion.service;
 
 import aiss.PIntegracion.model.Project;
-import aiss.PIntegracion.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
-public class UserService {
+public class ProjectService {
 
     @Value("${gitlab.token}")
     private String token;
@@ -23,50 +22,48 @@ public class UserService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<User> getUsers() {
-        String url = apiUrl + "/users";
-
+    public List<Project> getAllProjects() {
+        String url = apiUrl + "/projects";
         HttpHeaders headers = new HttpHeaders();
-        headers.set("PRIVATE-TOKEN", token);
+        headers.set("Authorization", token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<List<User>> response = restTemplate.exchange(
+        ResponseEntity<List<Project>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 entity,
-                new ParameterizedTypeReference<List<User>>() {}
+                new ParameterizedTypeReference<List<Project>>() {}
         );
         return response.getBody();
     }
 
-    public User getUserById(Integer id) {
-        String url = apiUrl + "/users/" + id;
-
+    public Project getProjectById(Integer id) {
+        String url = apiUrl + "/projects/" + id;
         HttpHeaders headers = new HttpHeaders();
-        headers.set("PRIVATE-TOKEN", token);
+        headers.set("Authorization", token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<User> response = restTemplate.exchange(
+        ResponseEntity<Project> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 entity,
-                User.class
+                Project.class
         );
         return response.getBody();
     }
 
-    public User createUser(User user) {
-        String url = apiUrl + "/users";
+    public Project createProject(Project project) {
+        String url = apiUrl + "/projects";
         HttpHeaders headers = new HttpHeaders();
-        headers.set("PRIVATE-TOKEN", token);
+        headers.set("Authorization", token);
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<User> request = new HttpEntity<>(user, headers);
+        HttpEntity<Project> request = new HttpEntity<>(project, headers);
 
-        ResponseEntity<User> response = restTemplate.exchange(
+        ResponseEntity<Project> response = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 request,
-                User.class
+                Project.class
         );
         return response.getBody();
     }

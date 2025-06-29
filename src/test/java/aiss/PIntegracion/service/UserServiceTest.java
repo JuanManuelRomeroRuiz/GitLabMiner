@@ -14,13 +14,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserServiceTest {
 
     @Autowired
-    UserService service;
+    UserService userService;
 
     @Test
     @DisplayName("Get all users")
     void getUsers() {
-        List<User> users = service.getUsers();
+        List<User> users = userService.getUsers();
         assertFalse(users.isEmpty());
         System.out.println(users);
+    }
+
+    @Test
+    @DisplayName("Get user by ID")
+    void getUserById() {
+        User user = userService.getUserById(1);
+        assertNotNull(user);
+        System.out.println(user);
     }
 }

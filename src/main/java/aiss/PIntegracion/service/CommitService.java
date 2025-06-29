@@ -1,7 +1,6 @@
 package aiss.PIntegracion.service;
 
-import aiss.PIntegracion.model.Project;
-import aiss.PIntegracion.model.User;
+import aiss.PIntegracion.model.Commit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
-public class UserService {
+public class CommitService {
 
     @Value("${gitlab.token}")
     private String token;
@@ -23,50 +22,51 @@ public class UserService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<User> getUsers() {
-        String url = apiUrl + "/users";
+    public List<Commit> getCommitsFromProject(Integer projectId) {
+        String url = apiUrl + "/projects/" + projectId +  "/repository/commits";
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("PRIVATE-TOKEN", token);
+        headers.set("Authorization", token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<List<User>> response = restTemplate.exchange(
+        ResponseEntity<List<Commit>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 entity,
-                new ParameterizedTypeReference<List<User>>() {}
+                new ParameterizedTypeReference<List<Commit>>() {}
         );
         return response.getBody();
     }
 
-    public User getUserById(Integer id) {
-        String url = apiUrl + "/users/" + id;
+    public Commit getCommitByIdFromProject(String commitId, Integer projectId) {
+        String url = apiUrl + "/projects/" + projectId + "/repository/commits/" + commitId;
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("PRIVATE-TOKEN", token);
+        headers.set("Authorization", token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<User> response = restTemplate.exchange(
+        ResponseEntity<Commit> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 entity,
-                User.class
+                Commit.class
         );
         return response.getBody();
     }
 
-    public User createUser(User user) {
-        String url = apiUrl + "/users";
+    public Commit createCommit(Commit commit, Integer projectId) {
+        String url = apiUrl + "/projects/" + projectId + "/repository/commits";
+
         HttpHeaders headers = new HttpHeaders();
-        headers.set("PRIVATE-TOKEN", token);
+        headers.set("Authorization", token);
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<User> request = new HttpEntity<>(user, headers);
+        HttpEntity<Commit> request = new HttpEntity<>(commit, headers);
 
-        ResponseEntity<User> response = restTemplate.exchange(
+        ResponseEntity<Commit> response = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 request,
-                User.class
+                Commit.class
         );
         return response.getBody();
     }
