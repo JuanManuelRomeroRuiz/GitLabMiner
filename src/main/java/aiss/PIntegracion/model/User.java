@@ -129,9 +129,9 @@ public class User {
                 ", name = " + name +
                 ", avatarUrl = " + avatarUrl +
                 ", webUrl = " + webUrl +
-                ", author = " + author +
-                ", comment = " + comment +
-                ", assignee = " + assignee +
+//                ", author = " + author +
+//                ", comment = " + comment +
+//                ", assignee = " + assignee +
                 "} \n";
     }
 }

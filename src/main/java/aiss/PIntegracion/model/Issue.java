@@ -226,10 +226,10 @@ public class Issue {
                 ", labels = " + labels +
                 ", upvotes = " + upvotes +
                 ", downvotes = " + downvotes +
-                ", comment = " + comment +
-                ", author = " + author +
-                ", assignee = " + assignee +
-                ", projectId = " + projectId +
+//                ", comment = " + comment +
+//                ", author = " + author +
+//                ", assignee = " + assignee +
+//                ", projectId = " + projectId +
                 "} \n";
     }
 }

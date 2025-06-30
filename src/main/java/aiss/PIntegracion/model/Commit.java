@@ -122,12 +122,12 @@ public class Commit {
         return "Commit{" +
                 "id = " + id +
                 ", title = " + title +
+                ", message = " + message +
                 ", author_Name = " + authorName +
                 ", author_eMail = " + authorEmail +
                 ", authored_Date = " + authoredDate +
-                ", message = " + message +
                 ", webUrl = " + webUrl +
-                ", project = " + project +
+//                ", project = " + project +
                 "} \n";
     }
 }

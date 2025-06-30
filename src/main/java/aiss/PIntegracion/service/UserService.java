@@ -23,7 +23,7 @@ public class UserService {
     @Autowired
     RestTemplate restTemplate;
 
-    public List<User> getUsers() {
+    public List<User> getAllUsers() {
         String url = apiUrl + "/users";
 
         HttpHeaders headers = new HttpHeaders();

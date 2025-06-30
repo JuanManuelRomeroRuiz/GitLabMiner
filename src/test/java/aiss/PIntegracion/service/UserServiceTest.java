@@ -19,7 +19,7 @@ class UserServiceTest {
     @Test
     @DisplayName("Get all users")
     void getUsers() {
-        List<User> users = userService.getUsers();
+        List<User> users = userService.getAllUsers();
         assertFalse(users.isEmpty());
         System.out.println(users);
     }

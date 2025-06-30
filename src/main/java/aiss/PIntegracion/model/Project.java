@@ -84,8 +84,8 @@ public class Project {
                 "id = " + id +
                 ", name = " + name +
                 ", webUrl = " + webUrl +
-                ", issueId = " + issue +
-                ", commitId = " + commit +
+//                ", issueId = " + issue +
+//                ", commitId = " + commit +
                 "} \n";
     }
 }
