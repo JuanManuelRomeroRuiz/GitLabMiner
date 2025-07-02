@@ -2,6 +2,8 @@ package aiss.PIntegracion.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +11,27 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
     private Integer id;
+
     @JsonProperty("name")
+    @Column(name="title")
+    @NotEmpty(message = "Project name is required")
     private String name;
+
     @JsonProperty("web_url")
+    @Column(name = "webUrl")
+    @NotEmpty(message = "Project url is required")
     private String webUrl;
+
     @JsonProperty("issue_id")
+    @OneToMany
     private List<Issue> issue;
+
     @JsonProperty("commit_id")
+    @OneToMany
     private List<Commit> commit;
 
     public Project(Integer id, String name, String webUrl, Integer issueId) {

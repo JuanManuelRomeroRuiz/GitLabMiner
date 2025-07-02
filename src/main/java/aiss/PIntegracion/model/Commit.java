@@ -3,25 +3,49 @@ package aiss.PIntegracion.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Commit {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
     private String id;
+
     @JsonProperty("title")
+    @Column(name = "title")
+    @NotEmpty(message = "Commit title is required")
     private String title;
+
     @JsonProperty("message")
+    @Column(name = "message")
+    @NotEmpty(message = "Commit message is required")
     private String message;
+
     @JsonProperty("author_name")
+    @Column(name = "authorName")
+    @NotEmpty(message = "Author name is required")
     private String authorName;
+
     @JsonProperty("author_email")
+    @Column(name = "authorEmail")
+    @NotEmpty(message = "Author email is required")
     private String authorEmail;
+
     @JsonProperty("authored_date")
+    @Column(name = "authoredDate")
+    @NotEmpty(message = "Authored date is required")
     private String authoredDate;
+
     @JsonProperty("web_url")
+    @Column(name = "webUrl")
+    @NotEmpty(message = "Commit webUrl is required")
     private String webUrl;
+
     @JsonProperty("project")
+    @ManyToOne
     private Project project;
 
     public Commit(String id, String title, String message, String authorName, String authorEmail, String authoredDate,

@@ -5,42 +5,82 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aiss.PIntegracion.model.Comment.Comment;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Issue {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
     private Integer id;
+
+    @Id
     @JsonProperty("iid")
     private Integer iid;
+
     @JsonProperty("title")
+    @Column(name = "title")
+    @NotEmpty(message = "Issue title is required")
     private String title;
+
     @JsonProperty("description")
+    @Column(name = "description")
+    @NotEmpty(message = "Issue description is required")
     private String description;
+
     @JsonProperty("state")
+    @Column(name = "state")
+    @NotEmpty(message = "Issue state is required")
     private String state;
+
     @JsonProperty("created_at")
+    @Column(name = "createdAt")
+    @NotEmpty(message = "CreatedAt date is required")
     private String createdAt;
+
     @JsonProperty("updated_at")
+    @Column(name = "updatedAt")
+    @NotEmpty(message = "UpdatedAt date is required")
     private String updatedAt;
+
     @JsonProperty("closed_at")
+    @Column(name = "closedAt")
+    @NotEmpty(message = "ClosedAt date is required")
     private String closedAt;
+
     @JsonProperty("labels")
+    @Column(name = "labels")
+    @NotEmpty(message = "Issue labels are required")
     private List<String> labels;
+
     @JsonProperty("upvotes")
+    @Column(name = "upvotes")
+    @NotEmpty(message = "Issue upvotes are required")
     private Integer upvotes;
+
     @JsonProperty("downvotes")
+    @Column(name = "downvotes")
+    @NotEmpty(message = "Issue downvotes are required")
     private Integer downvotes;
+
     @JsonProperty("comment")
+    @OneToMany
     private List<Comment> comment;
+
     @JsonProperty("author")
+    @ManyToOne
     private User author;
+
     @JsonProperty("assignee")
+    @ManyToOne
     private User assignee;
+
     @JsonProperty("project")
+    @ManyToOne
     private Project projectId;
 
 

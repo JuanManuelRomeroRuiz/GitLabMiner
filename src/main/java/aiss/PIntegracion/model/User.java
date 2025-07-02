@@ -4,6 +4,8 @@ package aiss.PIntegracion.model;
 import aiss.PIntegracion.model.Comment.Comment;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,21 +13,39 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
     private Integer id;
+
     @JsonProperty("username")
+    @Column(name = "username")
+    @NotEmpty(message = "Username is required")
     private String username;
+
     @JsonProperty("name")
+    @Column(name = "name")
+    @NotEmpty(message = "Name is required")
     private String name;
+
     @JsonProperty("avatar_url")
     private String avatarUrl;
+
     @JsonProperty("web_url")
+    @Column(name = "webUrl")
+    @NotEmpty(message = "User webUrl is required")
     private String webUrl;
+
     @JsonProperty("issue_author")
+    @OneToMany
     private List<Issue> author;
+
     @JsonProperty("comment")
+    @OneToMany
     private List<Comment> comment;
+
     @JsonProperty("issue_assignee")
+    @OneToMany
     private List<Issue> assignee;
 
 
